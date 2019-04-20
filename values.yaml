@@ -1,0 +1,64 @@
+database:
+  help: "Add a field called 'hostname' with the hostname of the database server to connect to, otherwise it'll be auto-calculated"
+  # hostname: ""
+  port: "3306"
+  username: "postfix_admin"
+  password: "some_secure_admin_password"
+  # name: "uncommand and replace this with the actual database name you want to override, or it'll be named after the database pod"
+
+lmtp:
+  port: "24"
+
+postfix:
+  help: "Add a field called 'hostname' with the hostname of the postfix server you want to use for submission, otherwise it'll be auto-calculated"
+  # hostname: ""
+
+server:
+  postmaster: "info"
+  domain: "antimatter-studios.com"
+  hostname: "s2.antimatter-studios.com"
+  storage: "50Gi"
+  recipient_delimiter: "+"
+
+haproxy:
+  imap: "yes"
+  imaps: "yes"
+  pop3: "yes"
+  pop3s: "yes"
+  # If you enable lmtp+haproxy you will have by default problems to receive email
+  # Unless you have a special configuration you've enabled
+  lmtp: "no"
+  submission: "yes"
+  trusted_networks: "10.0.0.0/8"
+  timeout: "5s"
+
+submission:
+  help: "Uncomment and edit if you require these to be anything other than the predefined/auto-calculated values"
+  #hostname: "postfix.mail-server"
+  port: "25"
+  ssl: "no"
+  ssl_verify: "no"
+
+logging:
+  auth_verbose: "yes"
+  auth_verbose_passwords: "yes"
+  auth_debug: "yes"
+  auth_debug_passwords: "yes"
+  mail_debug: "yes"
+  verbose_ssl: "yes"
+
+certs:
+  - domain: antimatter-studios.com
+    secret: tls-antimatter-studios
+  - domain: beersandbusiness.com
+    secret: tls-beersandbusiness
+#  - domain: watchyourfriend.com
+#    secret: tls-watchyourfriend
+#  - domain: thegreendisco.com
+#    secret: tls-thegreendisco
+#  - domain: fashion-exclusives.com
+#    secret: tls-fashion-exclusives
+#  - domain: cecilia-castello.com
+#    secret: tls-cecilia-castello
+#  - domain: asaja-tarragona.com
+#    secret: tls-asaja-tarragona

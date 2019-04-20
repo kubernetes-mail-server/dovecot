@@ -1,0 +1,42 @@
+{{ if gt (len .Values.certs) 0 }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.name }}-tls
+  namespace: {{ .Values.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+    - secretName: "tls-{{ .Values.name }}"
+      hosts:
+        {{ range $item := .Values.certs }}
+        - "mail.{{ $item.domain }}"
+        - "imap.{{ $item.domain }}"
+        - "smtp.{{ $item.domain }}"
+        {{ end }}
+  rules:
+    {{ range $item := .Values.certs }}
+    - host: "mail.{{ $item.domain }}"
+      http:
+        paths:
+          - backend:
+              serviceName: {{ $.Values.name }}
+              servicePort: 80
+
+    - host: "imap.{{ $item.domain }}"
+      http:
+        paths:
+          - backend:
+              serviceName: {{ $.Values.name }}
+              servicePort: 80
+
+    - host: "smtp.{{ $item.domain }}"
+      http:
+        paths:
+          - backend:
+              serviceName: {{ $.Values.name }}
+              servicePort: 80
+    {{ end }}
+{{ end }}

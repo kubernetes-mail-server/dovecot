@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.namespace }}-{{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    volume-name: {{ .Values.namespace }}-{{ .Values.name }}
+spec:
+  accessModes: [ "ReadWriteOnce" ]
+  capacity:
+    storage: "{{ .Values.server.storage }}"
+  hostPath:
+    path: /mnt/kubernetes/{{ .Values.namespace }}-{{ .Values.name }}

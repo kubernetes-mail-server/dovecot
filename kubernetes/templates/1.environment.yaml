@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+data:
+  ENTRYPOINT_DEBUG: ""
+  LOGGING_AUTH_VERBOSE: "{{ .Values.logging.auth_verbose }}"
+  LOGGING_AUTH_VERBOSE_PASSWORDS: "{{ .Values.logging.auth_verbose_passwords }}"
+  LOGGING_AUTH_DEBUG: "{{ .Values.logging.auth_debug }}"
+  LOGGING_AUTH_DEBUG_PASSWORDS: "{{ .Values.logging.auth_debug_passwords }}"
+  LOGGING_MAIL_DEBUG: "{{ .Values.logging.mail_debug }}"
+  LOGGING_VERBOSE_SSL: "{{ .Values.logging.verbose_ssl }}"
+
+  HAPROXY_TRUSTED_NETWORKS: "{{ .Values.haproxy.trusted_networks }}"
+  HAPROXY_TIMEOUT: "{{ .Values.haproxy.timeout }}"
+  HAPROXY_IMAP: "{{ .Values.haproxy.imap }}"
+  HAPROXY_IMAPS: "{{ .Values.haproxy.imaps }}"
+  HAPROXY_POP3: "{{ .Values.haproxy.pop3 }}"
+  HAPROXY_POP3S: "{{ .Values.haproxy.pop3s }}"
+  HAPROXY_SUBMISSION: "{{ .Values.haproxy.submission }}"
+  HAPROXY_LMTP: "{{ .Values.haproxy.lmtp }}"
+
+  LMTP_PORT: "{{ .Values.lmtp.port }}"
+
+  POSTMASTER: "{{ .Values.server.postmaster }}"
+  SERVER_DOMAIN: "{{ .Values.server.domain }}"
+  SERVER_HOSTNAME: "{{ .Values.server.hostname }}"
+  RECIPIENT_DELIMITER: "{{ .Values.server.recipient_delimiter }}"
+
+  SUBMISSION_HOST: {{ quote (coalesce .Values.submission.hostname (print "postfix." .Values.namespace)) }}
+  SUBMISSION_PORT: "{{ .Values.submission.port }}"
+  SUBMISSION_SSL: "{{ .Values.submission.ssl }}"
+  SUBMISSION_SSL_VERIFY: "{{ .Values.submission.ssl_verify }}"
+
+  DATABASE_HOSTNAME: {{ quote (coalesce .Values.database.hostname (print "database." .Values.namespace)) }}
+  DATABASE_PORT: "{{ .Values.database.port }}"
+  DATABASE_USERNAME: "{{ .Values.database.username }}"
+  DATABASE_PASSWORD: "{{ .Values.database.password }}"
+  DATABASE_NAME: {{ quote (coalesce .Values.database.name .Values.namespace | replace "-" "_") }}

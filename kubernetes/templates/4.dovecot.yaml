@@ -1,0 +1,127 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  serviceName: {{ .Values.name }}
+  replicas: 1
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+        namespace: {{ .Values.namespace }}
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.server.storage }}
+        selector:
+          matchLabels:
+            volume-name: {{ .Values.namespace }}-{{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.namespace }}
+        role: {{ .Values.name }}
+    spec:
+      nodeSelector:
+        mailserver: "true"
+      imagePullSecrets:
+        - name: {{ .Values.name }}
+      initContainers:
+        - name: dhpem
+          image: alpine:latest
+          command:
+            - sh
+            - "-c"
+            - apk --no-cache add openssl && echo 'Generating dh.pem' && openssl dhparam 2048 > /mnt/dh.pem
+          volumeMounts:
+            - name: dhpem
+              mountPath: /mnt
+      containers:
+        - name: healthz
+          image: k8s.gcr.io/exechealthz:1.0
+          args: ["-cmd=nslookup {{ .Values.name }}.{{ .Values.namespace }}"]
+          ports:
+            - name: healthz
+              containerPort: 8080
+              protocol: TCP
+        - name: {{ .Values.name }}
+          image: {{ .Values.repository }}
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.name }}
+          volumeMounts:
+            - name: storage
+              mountPath: /mail
+            - name: dhpem
+              mountPath: /etc/dh.pem
+              subPath: dh.pem
+            - name: tls-{{ .Values.name }}
+              mountPath: /certs/
+          ports:
+            - name: lmtp
+              containerPort: 24
+              protocol: TCP
+            - name: pop3
+              containerPort: 110
+              protocol: TCP
+            - name: pop3-ssl
+              containerPort: 995
+              protocol: TCP
+            - name: imap
+              containerPort: 143
+              protocol: TCP
+            - name: imap-ssl
+              containerPort: 993
+              protocol: TCP
+            - name: submission
+              containerPort: 587
+              protocol: TCP
+      volumes:
+        - name: dhpem
+          emptyDir: {}
+        - name: tls-{{ .Values.name }}
+          secret:
+            secretName: tls-{{ .Values.name }}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Values.namespace }}
+    role: {{ .Values.name }}
+  ports:
+    - name: lmtp
+      port: 24
+      targetPort: 24
+      protocol: TCP
+    - name: pop3
+      port: 110
+      targetPort: 110
+      protocol: TCP
+    - name: pop3-ssl
+      port: 995
+      targetPort: 995
+      protocol: TCP
+    - name: imap
+      port: 143
+      targetPort: 143
+      protocol: TCP
+    - name: imap-ssl
+      port: 993
+      targetPort: 993
+      protocol: TCP
+    - name: submission
+      port: 587
+      targetPort: 587
+      protocol: TCP
+    - name: healthz
+      port: 80
+      targetPort: 8080
+      protocol: TCP
