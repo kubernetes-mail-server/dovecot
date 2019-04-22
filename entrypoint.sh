@@ -43,10 +43,10 @@ for file in $(find /etc/dovecot -type f); do
     required SERVER_HOSTNAME ${file}
     optional RECIPIENT_DELIMITER ${file}
 
-    required SUBMISSION_HOSTNAME ${file}
-    required SUBMISSION_PORT ${file}
-    required SUBMISSION_SSL ${file}
-    required SUBMISSION_SSL_VERIFY ${file}
+    required POSTFIX_HOSTNAME ${file}
+    required POSTFIX_PORT ${file}
+    required POSTFIX_SSL ${file}
+    required POSTFIX_SSL_VERIFY ${file}
 
     required DATABASE_HOSTNAME ${file}
     required DATABASE_PORT ${file}
