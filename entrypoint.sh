@@ -43,7 +43,7 @@ for file in $(find /etc/dovecot -type f); do
     required SERVER_HOSTNAME ${file}
     optional RECIPIENT_DELIMITER ${file}
 
-    required SUBMISSION_HOST ${file}
+    required SUBMISSION_HOSTNAME ${file}
     required SUBMISSION_PORT ${file}
     required SUBMISSION_SSL ${file}
     required SUBMISSION_SSL_VERIFY ${file}
