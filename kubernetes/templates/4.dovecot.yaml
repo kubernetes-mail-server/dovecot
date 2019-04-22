@@ -53,23 +53,10 @@ spec:
             - configMapRef:
                 name: {{ .Values.name }}
             - configMapRef:
+                name: database-common
+            - configMapRef:
                 name: database-read
           env:
-            - name: "DATABASE_HOSTNAME"
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.namespace }}
-                  key: database.hostname
-            - name: "DATABASE_PORT"
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.namespace }}
-                  key: database.port
-            - name: "DATABASE_NAME"
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.namespace }}
-                  key: database.name
             - name: "SUBMISSION_HOSTNAME"
               valueFrom:
                 configMapKeyRef:
