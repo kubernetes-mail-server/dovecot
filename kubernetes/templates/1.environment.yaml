@@ -32,9 +32,3 @@ data:
   SUBMISSION_PORT: "{{ .Values.submission.port }}"
   SUBMISSION_SSL: "{{ .Values.submission.ssl }}"
   SUBMISSION_SSL_VERIFY: "{{ .Values.submission.ssl_verify }}"
-
-  DATABASE_HOSTNAME: {{ quote (coalesce .Values.database.hostname (print "database." .Values.namespace)) }}
-  DATABASE_PORT: "{{ .Values.database.port }}"
-  DATABASE_USERNAME: "{{ .Values.database.username }}"
-  DATABASE_PASSWORD: "{{ .Values.database.password }}"
-  DATABASE_NAME: {{ quote (coalesce .Values.database.name .Values.namespace | replace "-" "_") }}

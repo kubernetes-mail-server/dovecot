@@ -1,11 +1,3 @@
-database:
-  help: "Add a field called 'hostname' with the hostname of the database server to connect to, otherwise it'll be auto-calculated"
-  # hostname: ""
-  port: "3306"
-  username: "postfix_admin"
-  password: "some_secure_admin_password"
-  # name: "uncommand and replace this with the actual database name you want to override, or it'll be named after the database pod"
-
 lmtp:
   port: "24"
 
