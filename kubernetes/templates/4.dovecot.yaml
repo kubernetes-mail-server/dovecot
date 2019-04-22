@@ -53,6 +53,8 @@ spec:
             - configMapRef:
                 name: {{ .Values.name }}
             - configMapRef:
+                name: {{ .Values.namespace }}
+            - configMapRef:
                 name: database-common
             - configMapRef:
                 name: database-read
