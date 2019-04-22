@@ -1,16 +1,5 @@
-lmtp:
-  port: "24"
-
-postfix:
-  help: "Add a field called 'hostname' with the hostname of the postfix server you want to use for submission, otherwise it'll be auto-calculated"
-  # hostname: ""
-
 server:
-  postmaster: "info"
-  domain: "antimatter-studios.com"
-  hostname: "s2.antimatter-studios.com"
   storage: "50Gi"
-  recipient_delimiter: "+"
 
 haproxy:
   imap: "yes"
@@ -25,9 +14,6 @@ haproxy:
   timeout: "5s"
 
 submission:
-  help: "Uncomment and edit if you require these to be anything other than the predefined/auto-calculated values"
-  #hostname: "postfix.mail-server"
-  port: "25"
   ssl: "no"
   ssl_verify: "no"
 

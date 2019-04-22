@@ -21,14 +21,5 @@ data:
   HAPROXY_SUBMISSION: "{{ .Values.haproxy.submission }}"
   HAPROXY_LMTP: "{{ .Values.haproxy.lmtp }}"
 
-  LMTP_PORT: "{{ .Values.lmtp.port }}"
-
-  POSTMASTER: "{{ .Values.server.postmaster }}"
-  SERVER_DOMAIN: "{{ .Values.server.domain }}"
-  SERVER_HOSTNAME: "{{ .Values.server.hostname }}"
-  RECIPIENT_DELIMITER: "{{ .Values.server.recipient_delimiter }}"
-
-  SUBMISSION_HOST: {{ quote (coalesce .Values.submission.hostname (print "postfix." .Values.namespace)) }}
-  SUBMISSION_PORT: "{{ .Values.submission.port }}"
   SUBMISSION_SSL: "{{ .Values.submission.ssl }}"
   SUBMISSION_SSL_VERIFY: "{{ .Values.submission.ssl_verify }}"

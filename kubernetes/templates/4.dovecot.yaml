@@ -78,6 +78,41 @@ spec:
                 configMapKeyRef:
                   name: {{ .Values.namespace }}
                   key: database.name
+            - name: "SUBMISSION_HOSTNAME"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.namespace }}
+                  key: postfix.hostname
+            - name: "SUBMISSION_PORT"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.namespace }}
+                  key: postfix.port
+            - name: "LMTP_PORT"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.namespace }}
+                  key: lmtp.port
+            - name: "SERVER_DOMAIN"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.namespace }}
+                  key: server.domain
+            - name: "SERVER_HOSTNAME"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.namespace }}
+                  key: server.hostname
+            - name: "POSTMASTER"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.namespace }}
+                  key: general.postmaster
+            - name: "RECIPIENT_DELIMITER"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.namespace }}
+                  key: general.recipient_delimiter
           volumeMounts:
             - name: storage
               mountPath: /mail
