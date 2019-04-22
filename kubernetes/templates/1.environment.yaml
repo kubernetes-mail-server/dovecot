@@ -21,5 +21,5 @@ data:
   HAPROXY_SUBMISSION: "{{ .Values.haproxy.submission }}"
   HAPROXY_LMTP: "{{ .Values.haproxy.lmtp }}"
 
-  SUBMISSION_SSL: "{{ .Values.submission.ssl }}"
-  SUBMISSION_SSL_VERIFY: "{{ .Values.submission.ssl_verify }}"
+  POSTFIX_SSL: "{{ .Values.submission.ssl }}"
+  POSTFIX_SSL_VERIFY: "{{ .Values.submission.ssl_verify }}"

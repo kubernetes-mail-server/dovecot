@@ -57,21 +57,6 @@ spec:
             - configMapRef:
                 name: database-read
           env:
-            - name: "SUBMISSION_HOSTNAME"
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.namespace }}
-                  key: postfix.hostname
-            - name: "SUBMISSION_PORT"
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.namespace }}
-                  key: postfix.port
-            - name: "LMTP_PORT"
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.namespace }}
-                  key: lmtp.port
             - name: "SERVER_DOMAIN"
               valueFrom:
                 configMapKeyRef:
