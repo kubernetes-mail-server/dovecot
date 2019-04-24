@@ -80,8 +80,7 @@ spec:
           ports:
             {{- range $name, $port := .Values.ports }}
             - name: {{ $name }}
-              port: {{ $port }}
-              targetPort: {{ $port }}
+              containerPort: {{ $port }}
               protocol: TCP
             {{- end }}
       volumes:
