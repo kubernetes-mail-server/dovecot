@@ -72,6 +72,12 @@ jobs:
             --set name=${NAME}
             --set namespace=${NAMESPACE}
             --set repository=${IMAGE}:${TRAVIS_BUILD_ID}
+            --set ports.lmtp=24
+            --set ports.pop3=110
+            --set ports.pop3-ssl=995
+            --set ports.imap=143
+            --set ports.imap-ssl=993
+            --set ports.submission=587
             $PWD/kubernetes | kubectl apply -f -
         - kubectl scale --replicas=${REPLICAS} statefulset/${NAME}
         - kubectl get statefulset

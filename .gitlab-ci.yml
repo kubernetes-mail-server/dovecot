@@ -47,6 +47,12 @@ deploy:
       --set registry=${CI_REGISTRY}
       --set username=${CI_DEPLOY_USERNAME}
       --set password=${CI_DEPLOY_PASSWORD}
+      --set ports.lmtp=24
+      --set ports.pop3=110
+      --set ports.pop3-ssl=995
+      --set ports.imap=143
+      --set ports.imap-ssl=993
+      --set ports.submission=587
       $PWD/kubernetes | kubectl apply -f -
     - kubectl -n ${NAMESPACE} scale --replicas=${REPLICAS} statefulset/${NAME}
     - kubectl -n ${NAMESPACE} get statefulset

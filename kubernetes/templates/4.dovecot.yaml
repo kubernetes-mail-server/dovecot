@@ -59,16 +59,6 @@ spec:
             - configMapRef:
                 name: database-read
           env:
-            - name: "SERVER_DOMAIN"
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.namespace }}
-                  key: server.domain
-            - name: "SERVER_HOSTNAME"
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.namespace }}
-                  key: server.hostname
             - name: "POSTMASTER"
               valueFrom:
                 configMapKeyRef:
@@ -88,24 +78,12 @@ spec:
             - name: tls-{{ .Values.name }}
               mountPath: /certs/
           ports:
-            - name: lmtp
-              containerPort: 24
+            {{- range $name, $port := .Values.ports }}
+            - name: {{ $name }}
+              port: {{ $port }}
+              targetPort: {{ $port }}
               protocol: TCP
-            - name: pop3
-              containerPort: 110
-              protocol: TCP
-            - name: pop3-ssl
-              containerPort: 995
-              protocol: TCP
-            - name: imap
-              containerPort: 143
-              protocol: TCP
-            - name: imap-ssl
-              containerPort: 993
-              protocol: TCP
-            - name: submission
-              containerPort: 587
-              protocol: TCP
+            {{- end }}
       volumes:
         - name: dhpem
           emptyDir: {}
@@ -124,31 +102,9 @@ spec:
     app: {{ .Values.namespace }}
     role: {{ .Values.name }}
   ports:
-    - name: lmtp
-      port: 24
-      targetPort: 24
+    {{- range $name, $port := .Values.ports }}
+    - name: {{ $name }}
+      port: {{ $port }}
+      targetPort: {{ $port }}
       protocol: TCP
-    - name: pop3
-      port: 110
-      targetPort: 110
-      protocol: TCP
-    - name: pop3-ssl
-      port: 995
-      targetPort: 995
-      protocol: TCP
-    - name: imap
-      port: 143
-      targetPort: 143
-      protocol: TCP
-    - name: imap-ssl
-      port: 993
-      targetPort: 993
-      protocol: TCP
-    - name: submission
-      port: 587
-      targetPort: 587
-      protocol: TCP
-    - name: healthz
-      port: 80
-      targetPort: 8080
-      protocol: TCP
+    {{- end }}

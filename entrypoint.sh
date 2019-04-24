@@ -39,8 +39,7 @@ for file in $(find /etc/dovecot -type f); do
     required LMTP_PORT ${file}
 
     required POSTMASTER ${file}
-    required SERVER_DOMAIN ${file}
-    required SERVER_HOSTNAME ${file}
+    required HOSTNAME ${file}
     optional RECIPIENT_DELIMITER ${file}
 
     required POSTFIX_HOSTNAME ${file}
