@@ -72,12 +72,12 @@ jobs:
             --set name=${NAME}
             --set namespace=${NAMESPACE}
             --set repository=${IMAGE}:${TRAVIS_BUILD_ID}
-            --set ports.lmtp=24
-            --set ports.pop3=110
-            --set ports.pop3-ssl=995
-            --set ports.imap=143
-            --set ports.imap-ssl=993
-            --set ports.submission=587
+            --set ports.lmtp=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_LMTP}")
+            --set ports.pop3=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_POP3}")
+            --set ports.pop3-ssl=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_POP3_SSL}")
+            --set ports.imap=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_IMAP}")
+            --set ports.imap-ssl=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_IMAP_SSL}")
+            --set ports.submission=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_SUBMISSION}")
             $PWD/kubernetes | kubectl apply -f -
         - kubectl scale --replicas=${REPLICAS} statefulset/${NAME}
         - kubectl get statefulset
