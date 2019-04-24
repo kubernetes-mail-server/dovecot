@@ -43,7 +43,7 @@ for file in $(find /etc/dovecot -type f); do
     optional RECIPIENT_DELIMITER ${file}
 
     required POSTFIX_HOSTNAME ${file}
-    required POSTFIX_PORT ${file}
+    required POSTFIX_SUBMISSION_PORT ${file}
     required POSTFIX_SSL ${file}
     required POSTFIX_SSL_VERIFY ${file}
 
