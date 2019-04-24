@@ -44,8 +44,8 @@ for file in $(find /etc/dovecot -type f); do
 
     required POSTFIX_HOSTNAME ${file}
     required POSTFIX_SUBMISSION_PORT ${file}
-    required POSTFIX_SSL ${file}
-    required POSTFIX_SSL_VERIFY ${file}
+    required POSTFIX_SUBMISSION_SSL ${file}
+    required POSTFIX_SUBMISSION_SSL_VERIFY ${file}
 
     required DATABASE_HOSTNAME ${file}
     required DATABASE_PORT ${file}
