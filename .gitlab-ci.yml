@@ -47,6 +47,7 @@ deploy:
       --set registry=${CI_REGISTRY}
       --set username=${CI_DEPLOY_USERNAME}
       --set password=${CI_DEPLOY_PASSWORD}
+      --set server.storage=$(kubectl get cm general -o=jsonpath="{.data.STORAGE_SIZE}")
       --set ports.lmtp=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_LMTP}")
       --set ports.pop3=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_POP3}")
       --set ports.pop3-ssl=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_POP3_SSL}")

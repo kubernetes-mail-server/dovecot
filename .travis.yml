@@ -72,6 +72,7 @@ jobs:
             --set name=${NAME}
             --set namespace=${NAMESPACE}
             --set repository=${IMAGE}:${TRAVIS_BUILD_ID}
+            --set server.storage=$(kubectl get cm general -o=jsonpath="{.data.STORAGE_SIZE}")
             --set ports.lmtp=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_LMTP}")
             --set ports.pop3=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_POP3}")
             --set ports.pop3-ssl=$(kubectl get cm connection-map -o=jsonpath="{.data.DOVECOT_POP3_SSL}")

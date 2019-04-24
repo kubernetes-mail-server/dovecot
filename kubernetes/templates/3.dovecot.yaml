@@ -51,15 +51,17 @@ spec:
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
-                name: {{ .Values.name }}
-            - configMapRef:
                 name: general
             - configMapRef:
-                name: connection-map
+                name: services-info
             - configMapRef:
                 name: database-common
             - configMapRef:
                 name: database-read
+            - configMapRef:
+                name: dovecot-haproxy
+            - configMapRef:
+                name: dovecot-logging
           volumeMounts:
             - name: storage
               mountPath: /mail
