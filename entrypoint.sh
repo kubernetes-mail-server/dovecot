@@ -36,7 +36,7 @@ for file in $(find /etc/dovecot -type f); do
     required HAPROXY_SUBMISSION ${file}
     required HAPROXY_LMTP ${file}
 
-    required LMTP_PORT ${file}
+    required DOVECOT_LMTP ${file}
 
     required POSTMASTER ${file}
     required HOSTNAME ${file}
