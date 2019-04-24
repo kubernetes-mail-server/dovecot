@@ -53,22 +53,13 @@ spec:
             - configMapRef:
                 name: {{ .Values.name }}
             - configMapRef:
+                name: general
+            - configMapRef:
                 name: connection-map
             - configMapRef:
                 name: database-common
             - configMapRef:
                 name: database-read
-          env:
-            - name: "POSTMASTER"
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.namespace }}
-                  key: general.postmaster
-            - name: "RECIPIENT_DELIMITER"
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.namespace }}
-                  key: general.recipient_delimiter
           volumeMounts:
             - name: storage
               mountPath: /mail
