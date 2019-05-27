@@ -49,6 +49,16 @@ spec:
         - name: {{ .Values.name }}
           image: {{ .Values.repository }}
           imagePullPolicy: Always
+          readinessProbe:
+            tcpSocket:
+              port: {{ index .Values.ports 0 }}
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            livenessProbe:
+              tcpSocket:
+                port: {{ index .Values.ports 0 }}
+              initialDelaySeconds: 60
+              periodSeconds: 60
           envFrom:
             - configMapRef:
                 name: general

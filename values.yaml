@@ -3,13 +3,13 @@ certs:
     secret: tls-antimatter-studios
   - domain: beersandbusiness.com
     secret: tls-beersandbusiness
+  - domain: cecilia-castello.com
+    secret: tls-cecilia-castello
+  - domain: asaja-tarragona.com
+    secret: tls-asaja-tarragona
 #  - domain: watchyourfriend.com
 #    secret: tls-watchyourfriend
 #  - domain: thegreendisco.com
 #    secret: tls-thegreendisco
 #  - domain: fashion-exclusives.com
 #    secret: tls-fashion-exclusives
-#  - domain: cecilia-castello.com
-#    secret: tls-cecilia-castello
-#  - domain: asaja-tarragona.com
-#    secret: tls-asaja-tarragona
