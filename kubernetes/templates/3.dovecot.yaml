@@ -51,12 +51,12 @@ spec:
           imagePullPolicy: Always
           readinessProbe:
             tcpSocket:
-              port: {{ index .Values.ports 0 }}
+              port: 587
             initialDelaySeconds: 60
             periodSeconds: 60
           livenessProbe:
             tcpSocket:
-              port: {{ index .Values.ports 0 }}
+              port: 587
             initialDelaySeconds: 60
             periodSeconds: 60
           envFrom:
