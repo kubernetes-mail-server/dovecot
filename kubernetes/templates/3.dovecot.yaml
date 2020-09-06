@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ .Values.name }}
@@ -18,6 +18,10 @@ spec:
         selector:
           matchLabels:
             volume-name: {{ .Values.namespace }}-{{ .Values.name }}
+  selector:
+    matchLabels:
+      app: {{ .Values.namespace }}
+      role: {{ .Values.name }}
   template:
     metadata:
       labels:
