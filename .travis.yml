@@ -65,24 +65,24 @@ jobs:
       if: branch = master and type != pull_request
       script:
         - export KUBECONFIG=$PWD/kubeconfig
-        - kubectl get pods
-        - kubectl scale --replicas=0 statefulset/${NAME} || true
-        - kubectl get statefulset
+        - kubectl get pods -n ${NAMESPACE}
+        - kubectl scale --replicas=0 -n ${NAMESPACE} statefulset/${NAME} || true
+        - kubectl get statefulset -n ${NAMESPACE}
         - helm template
             -f $PWD/values.yaml
             --set name=${NAME}
             --set namespace=${NAMESPACE}
             --set repository=${IMAGE}:${TRAVIS_BUILD_ID}
-            --set server.storage=$(kubectl get cm general -o=jsonpath="{.data.STORAGE_SIZE}")
-            --set ports.lmtp=$(kubectl get cm services-info -o=jsonpath="{.data.DOVECOT_LMTP}")
-            --set ports.pop3=$(kubectl get cm services-info -o=jsonpath="{.data.DOVECOT_POP3}")
-            --set ports.pop3-ssl=$(kubectl get cm services-info -o=jsonpath="{.data.DOVECOT_POP3_SSL}")
-            --set ports.imap=$(kubectl get cm services-info -o=jsonpath="{.data.DOVECOT_IMAP}")
-            --set ports.imap-ssl=$(kubectl get cm services-info -o=jsonpath="{.data.DOVECOT_IMAP_SSL}")
-            --set ports.submission=$(kubectl get cm services-info -o=jsonpath="{.data.DOVECOT_SUBMISSION}")
+            --set server.storage=$(kubectl get cm -n ${NAMESPACE} general -o=jsonpath="{.data.STORAGE_SIZE}")
+            --set ports.lmtp=$(kubectl get cm -n ${NAMESPACE} services-info -o=jsonpath="{.data.DOVECOT_LMTP}")
+            --set ports.pop3=$(kubectl get cm -n ${NAMESPACE} services-info -o=jsonpath="{.data.DOVECOT_POP3}")
+            --set ports.pop3-ssl=$(kubectl get cm -n ${NAMESPACE} services-info -o=jsonpath="{.data.DOVECOT_POP3_SSL}")
+            --set ports.imap=$(kubectl get cm -n ${NAMESPACE} services-info -o=jsonpath="{.data.DOVECOT_IMAP}")
+            --set ports.imap-ssl=$(kubectl get cm -n ${NAMESPACE} services-info -o=jsonpath="{.data.DOVECOT_IMAP_SSL}")
+            --set ports.submission=$(kubectl get cm -n ${NAMESPACE} services-info -o=jsonpath="{.data.DOVECOT_SUBMISSION}")
             $PWD/kubernetes | kubectl apply -f -
-        - kubectl scale --replicas=${REPLICAS} statefulset/${NAME}
-        - kubectl get statefulset
+        - kubectl scale --replicas=${REPLICAS} -n ${NAMESPACE} statefulset/${NAME}
+        - kubectl get statefulset -n ${NAMESPACE}
     - stage: cleanup
       name: Remove the docker image from the cache
       script:
