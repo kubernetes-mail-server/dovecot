@@ -1,12 +1,12 @@
 certs:
   - domain: antimatter-studios.com
     secret: tls-antimatter-studios
-  - domain: beersandbusiness.com
-    secret: tls-beersandbusiness
   - domain: cecilia-castello.com
     secret: tls-cecilia-castello
   - domain: asaja-tarragona.com
     secret: tls-asaja-tarragona
+#  - domain: beersandbusiness.com
+#    secret: tls-beersandbusiness
 #  - domain: watchyourfriend.com
 #    secret: tls-watchyourfriend
 #  - domain: thegreendisco.com

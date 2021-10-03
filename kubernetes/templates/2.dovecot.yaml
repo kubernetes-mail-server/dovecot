@@ -4,6 +4,10 @@ metadata:
   name: {{ .Values.name }}
   namespace: {{ .Values.namespace }}
 spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.namespace }}
+      role: {{ .Values.name }}
   serviceName: {{ .Values.name }}
   replicas: 1
   volumeClaimTemplates:
@@ -30,8 +34,6 @@ spec:
     spec:
       nodeSelector:
         mail-server: "true"
-      imagePullSecrets:
-        - name: {{ .Values.name }}
       initContainers:
         - name: dhpem
           image: alpine:latest
