@@ -19,24 +19,7 @@ spec:
   rules:
     {{ range $item := .Values.certs }}
     - host: "mail.{{ $item.domain }}"
-      http:
-        paths:
-          - backend:
-              serviceName: {{ $.Values.name }}
-              servicePort: 80
-
     - host: "imap.{{ $item.domain }}"
-      http:
-        paths:
-          - backend:
-              serviceName: {{ $.Values.name }}
-              servicePort: 80
-
     - host: "smtp.{{ $item.domain }}"
-      http:
-        paths:
-          - backend:
-              serviceName: {{ $.Values.name }}
-              servicePort: 80
     {{ end }}
 {{ end }}
