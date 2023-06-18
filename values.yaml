@@ -5,6 +5,8 @@ certs:
     secret: tls-cecilia-castello
   - domain: asaja-tarragona.com
     secret: tls-asaja-tarragona
+  - domain: lgifrance.fr
+    secret: tls-lgifrance
 #  - domain: beersandbusiness.com
 #    secret: tls-beersandbusiness
 #  - domain: watchyourfriend.com
