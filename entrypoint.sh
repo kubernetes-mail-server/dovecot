@@ -37,6 +37,7 @@ for file in $(find /etc/dovecot -type f); do
     required HAPROXY_LMTP ${file}
 
     required DOVECOT_LMTP ${file}
+    required DOVECOT_MAX_IP_CONNECTIONS ${file}
 
     required POSTMASTER ${file}
     required HOSTNAME ${file}
