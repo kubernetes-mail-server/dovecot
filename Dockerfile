@@ -2,6 +2,14 @@ FROM debian:buster-slim
 
 ENV DEBIAN_FRONTEND noninteractive
 
+# Buster is gone from the Debian mirrors; its final packages (dovecot 2.3.4.1-5+deb10u7, the version
+# running since) are on archive.debian.org, whose Release files have expired by design.
+RUN printf '%s\n' \
+        'deb http://archive.debian.org/debian buster main' \
+        'deb http://archive.debian.org/debian-security buster/updates main' \
+        > /etc/apt/sources.list \
+    && echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99archive
+
 RUN set -x && apt-get update \
     && apt-get --no-install-recommends install -y \
         gnupg lsb-release curl ca-certificates netcat \
